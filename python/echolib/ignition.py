@@ -7,9 +7,17 @@ from __future__ import unicode_literals
 from builtins import super
 from future import standard_library
 standard_library.install_aliases()
-import collections
 
-from ignition.plugin import Plugin
+try:
+    # Python 3.10 changes
+    from collections.abc import Mapping
+except ImportError:
+    from collections import Mapping
+
+try:
+    from ignition.plugin import Plugin
+except ImportError:
+    raise ImportError("Ignition package is required to use this module")
 
 class Mapping(Plugin):
 
@@ -19,7 +27,7 @@ class Mapping(Plugin):
     def on_program_init(self, program):
         mapping = program.auxiliary.get("remap", {})
 
-        if not isinstance(mapping, collections.Mapping):
+        if not isinstance(mapping, Mapping):
             return
         maplist = []
         for k, v in mapping.items():

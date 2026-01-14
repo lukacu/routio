@@ -158,8 +158,6 @@ if(BUILD_PYTHON)
         set_target_properties(pyecho PROPERTIES PREFIX "")
         target_include_directories(pyecho PRIVATE ${Python_INCLUDE_DIRS} ${PYBIND11_INCLUDE_DIR})
 
-
-        install(CODE "execute_process(COMMAND whoami)")
         install(CODE "execute_process(COMMAND ${Python_EXECUTABLE} setup.py install WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/python)")
 
     ENDIF()

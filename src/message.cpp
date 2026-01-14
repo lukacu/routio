@@ -471,6 +471,7 @@ namespace echolib
             {
                 if (data_length > MESSAGE_MAX_SIZE || data_length == 0)
                 {
+                    DEBUGMSG("Error: data exceeds maximum allowed length, terminating.")
                     error = -1;
                     break;
                 }

@@ -522,12 +522,15 @@ namespace echolib
             else
             {
 
-                if (sequence != 0)
+                if (sequence != 0) {
+                    DEBUGMSG("Not first chunk, ignoring\n");
                     return;
+                }
 
                 if ((int)pending.size() > pending_capacity && pending_capacity > 0)
                 {
-                    pending.erase(std::prev(pending.end()));
+                    DEBUGMSG("Too many pending chunks dropping some.\n");
+                    pending.erase(pending.begin());
                 }
 
                 int64_t length = reader.read_long();
@@ -547,14 +550,13 @@ namespace echolib
 
             if (!valid)
             {
-
+                DEBUGMSG("Invalid message chunk, dropping message\n");
                 pending.erase(id);
                 return;
             }
 
             if (pending[id]->is_complete())
             {
-
                 shared_ptr<ChunkList> chunks = pending[id];
 
                 pending.erase(id);

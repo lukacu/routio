@@ -236,7 +236,7 @@ namespace echolib
         int id = -1;
     };
 
-#define DEFAULT_CHUNK_SIZE 10 * 1024
+#define DEFAULT_CHUNK_SIZE 1024 * 128
 
     class Publisher
     {
