@@ -33,5 +33,5 @@ class Mapping(Plugin):
         for k, v in mapping.items():
             maplist.append("%s=%s" % (k, v))
 
-        program.environment["ECHOLIB_MAP"] = ";".join(maplist)
+        program.environment["ROUTIO_MAP"] = ";".join(maplist)
 

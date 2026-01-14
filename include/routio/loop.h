@@ -10,13 +10,13 @@
 #include <memory>
 #include <mutex>
 
-#include <echolib/message.h>
+#include <routio/message.h>
 
 #define SYNCHRONIZED(M) std::lock_guard<std::recursive_mutex> lock (M)
 
 using namespace std;
 
-namespace echolib {
+namespace routio {
 
 class IOBase;
 typedef shared_ptr<IOBase> SharedIOBase;

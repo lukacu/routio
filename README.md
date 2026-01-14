@@ -1,10 +1,14 @@
-# Echo IPC library #
+![Logo](docs/logo.png)
+
+# Routio IPC library #
 
 A simple and efficient interprocess communication (IPC) library for Linux written in C++11. The core part of the code was developed as a bachelor's thesis of Urban Škvorc with the title `Development of a library for interprocess communication in interactive systems` in 2015 at the University of Ljubljana, Faculty of Computer and Information Science. The library was later added some documentation and some polish and is now made available under MIT license.
 
+The library was known under the name EchoLib until early 2025, when it was renamed to Routio to better reflect its purpose as a message routing library.
+
 ## Contributors ##
 
- * Luka Čehovin Zajc (developer, maintainer)
+ * [Luka Čehovin Zajc](https://github.com/lukacu) (developer, maintainer)
  * Rok Mandeljc (contributor)
  * Urban Škvorc (initial developer)
 

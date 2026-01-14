@@ -5,13 +5,13 @@
 #include <memory>
 #include <opencv2/opencv.hpp>
 
-#include <echolib/client.h>
-#include <echolib/datatypes.h>
-#include <echolib/helpers.h>
-#include <echolib/camera.h>
+#include <routio/client.h>
+#include <routio/datatypes.h>
+#include <routio/helpers.h>
+#include <routio/camera.h>
 
 using namespace std;
-using namespace echolib;
+using namespace routio;
 using namespace cv;
 
 CameraIntrinsics parameters;
@@ -22,7 +22,7 @@ int main(int argc, char** argv) {
 
     string filename(argv[1]);
 
-    SharedClient client = echolib::connect(string(), "videoserver");
+    SharedClient client = routio::connect(string(), "videoserver");
 
     Mat image, image_rgb;
 
@@ -78,7 +78,7 @@ int main(int argc, char** argv) {
 
             frame_publisher->send(frame);
         }
-        if (!echolib::wait(30)) break;
+        if (!routio::wait(30)) break;
     }
 
     exit(0);

@@ -3,10 +3,10 @@
 #ifndef ECHO_HELPERS_HPP_
 #define ECHO_HELPERS_HPP_
 
-#include <echolib/client.h>
-#include <echolib/datatypes.h>
+#include <routio/client.h>
+#include <routio/datatypes.h>
 
-namespace echolib {
+namespace routio {
 
 template<typename T> class StaticPublisher: public TypedPublisher<T>, public Watcher, public std::enable_shared_from_this<StaticPublisher<T> > {
 public:
@@ -91,7 +91,7 @@ private:
 using namespace google::protobuf;
 using namespace google::protobuf::io;
 
-namespace echolib {
+namespace routio {
 
 //template<class T> class std::enable_if<std::is_base_of<MessageLite, T>::value, T>::type;
 
@@ -137,7 +137,7 @@ inline shared_ptr<Message> Message::pack(int channel, const T &data) {
 
 using namespace flatbuffers;
 
-namespace echolib {
+namespace routio {
 
 template <typename T>
 class FlatbuffersSubscriber : public Subscriber {
@@ -158,7 +158,7 @@ class FlatbuffersSubscriber : public Subscriber {
 
             callback(data);
 
-        } catch (echolib::ParseException &e) {
+        } catch (routio::ParseException &e) {
             Subscriber::on_error(e);
         }
 

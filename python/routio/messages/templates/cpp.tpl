@@ -7,7 +7,7 @@
 #include <{{ include }}>
 {% endfor %}
 
-namespace echolib {
+namespace routio {
 
 {% for name, type in registry.types.items() %}
 {%- if type.get_reader() and type.get_writer() %}
@@ -85,7 +85,7 @@ public:
 {% endfor %}
 {% endif %}
 
-namespace echolib {
+namespace routio {
 
 {% for name, values in registry.enums.items() %}
 
@@ -127,13 +127,13 @@ template <> inline void write(MessageWriter& writer, const {{ cppnamespace }}{{ 
 
 template <> inline string get_type_identifier<{{ cppnamespace }}{{ name }}>() { return string("{{ metadata.get_hash() }}"); }
 
-template<> inline shared_ptr<Message> echolib::Message::pack<{{ cppnamespace }}{{ name }} >(const {{ cppnamespace }}{{ name }} &data) {
+template<> inline shared_ptr<Message> routio::Message::pack<{{ cppnamespace }}{{ name }} >(const {{ cppnamespace }}{{ name }} &data) {
     MessageWriter writer;
     write(writer, data);
     return make_shared<BufferedMessage>(writer);
 }
 
-template<> inline shared_ptr<{{ cppnamespace }}{{ name }} > echolib::Message::unpack<{{ cppnamespace }}{{ name }}>(SharedMessage message) {
+template<> inline shared_ptr<{{ cppnamespace }}{{ name }} > routio::Message::unpack<{{ cppnamespace }}{{ name }}>(SharedMessage message) {
     MessageReader reader(message);
     shared_ptr<{{ cppnamespace }}{{ name }}> result(new {{ cppnamespace }}{{ name }}());
     read(reader, *result);

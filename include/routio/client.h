@@ -70,7 +70,7 @@ namespace std
 
 }
 
-namespace echolib
+namespace routio
 {
 
     class Client;

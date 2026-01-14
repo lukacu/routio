@@ -25,13 +25,13 @@ def enum_conversion(enum, obj):
 {% for name, values in registry.enums.items() %}
 {{ name }} = enum("{{ name }}", { {% for k, v in values.items() %}'{{k}}' : {{v}}{% if not loop.last %}, {% endif %}{% endfor %} })
 
-echolib.registerType({{ name }}, lambda x: x.readInt(), lambda x, o: x.writeInt(o), lambda x: enum_conversion({{ name }}, x))
+routio.registerType({{ name }}, lambda x: x.readInt(), lambda x, o: x.writeInt(o), lambda x: enum_conversion({{ name }}, x))
 
 {% endfor %}
 
 {% for name, type in registry.types.items() %}
 {%- if type.get_reader() and type.get_writer() %}
-echolib.registerType({{ type.get_container() }}, {{ type.get_reader() }}, {{ type.get_writer() }} )
+routio.registerType({{ type.get_container() }}, {{ type.get_reader() }}, {{ type.get_writer() }} )
 {% endif -%}
 {% endfor %}
 
@@ -79,9 +79,9 @@ class {{ name }}(object):
         dst = {{ name }}()
         {% for k, v in fields.items() -%}
         {% if v['array'] -%}
-        dst.{{ k }} = echolib.readList({{ registry.types[v["type"]].get_container() }}, reader)
+        dst.{{ k }} = routio.readList({{ registry.types[v["type"]].get_container() }}, reader)
         {% else %}
-        dst.{{ k }} = echolib.readType({{ registry.types[v["type"]].get_container() }}, reader)
+        dst.{{ k }} = routio.readType({{ registry.types[v["type"]].get_container() }}, reader)
         {% endif %}
         {% endfor %}
         return dst
@@ -90,36 +90,36 @@ class {{ name }}(object):
     def write(writer, obj):
         {% for k, v in fields.items() -%}
         {% if v['array'] -%}
-        echolib.writeList({{ registry.types[v["type"]].get_container() }}, writer, obj.{{ k }})
+        routio.writeList({{ registry.types[v["type"]].get_container() }}, writer, obj.{{ k }})
         {% else %}
-        echolib.writeType({{ registry.types[v["type"]].get_container() }}, writer, obj.{{ k }})
+        routio.writeType({{ registry.types[v["type"]].get_container() }}, writer, obj.{{ k }})
         {% endif %}
         {% endfor %}
         pass
 
-echolib.registerType({{ name }}, {{ name }}.read, {{ name }}.write)
+routio.registerType({{ name }}, {{ name }}.read, {{ name }}.write)
 
 {% endfor %}
 
 {% for name in registry.messages %}
 {% set metadata = registry.types[name] %}
-class {{ name }}Subscriber(echolib.Subscriber):
+class {{ name }}Subscriber(routio.Subscriber):
 
     def __init__(self, client, alias, callback):
         def _read(message):
-            reader = echolib.MessageReader(message)
+            reader = routio.MessageReader(message)
             return {{ name }}.read(reader)
 
         super({{ name }}Subscriber, self).__init__(client, alias, "{{ metadata.get_hash() }}", lambda x: callback(_read(x)))
 
 
-class {{ name }}Publisher(echolib.Publisher):
+class {{ name }}Publisher(routio.Publisher):
 
     def __init__(self, client, alias):
         super({{ name }}Publisher, self).__init__(client, alias, "{{ metadata.get_hash() }}")
 
     def send(self, obj):
-        writer = echolib.MessageWriter()
+        writer = routio.MessageWriter()
         {{ name }}.write(writer, obj)
         super({{ name }}Publisher, self).send(writer)
 

@@ -1,8 +1,8 @@
 
 
-#include <echolib/datatypes.h>
+#include <routio/datatypes.h>
 
-namespace echolib {
+namespace routio {
 
 Header::Header(std::string source, std::chrono::system_clock::time_point timestamp): source(source), timestamp(timestamp) {
 
@@ -19,7 +19,7 @@ shared_ptr<Dictionary> Message::unpack(SharedMessage message) {
 
     MessageReader reader(message);
 
-    shared_ptr<echolib::Dictionary> dictionary(new echolib::Dictionary);
+    shared_ptr<routio::Dictionary> dictionary(new routio::Dictionary);
 
     read(reader, *dictionary);
 
@@ -44,7 +44,7 @@ shared_ptr<Header> Message::unpack(SharedMessage message) {
 
     MessageReader reader(message);
 
-    shared_ptr<echolib::Header> header(new echolib::Header);
+    shared_ptr<routio::Header> header(new routio::Header);
 
     read(reader, *header);
 

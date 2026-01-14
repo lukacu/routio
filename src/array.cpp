@@ -11,12 +11,12 @@
 #endif
 
 #include "debug.h"
-#include <echolib/array.h>
+#include <routio/array.h>
 
 using namespace std;
-using namespace echolib;
+using namespace routio;
 
-namespace echolib {
+namespace routio {
 
 Array::Array(): Array(0) {}
 
@@ -47,7 +47,7 @@ uchar* Array::get_data() const {
     return data;
 }
 
-size_t multiply_dimensions(echolib::any_container<size_t> dims) {
+size_t multiply_dimensions(routio::any_container<size_t> dims) {
 
     if (dims->size() == 0) return 0;
 
@@ -89,12 +89,12 @@ size_t Tensor::get_type_bytes(DataType dtype) {
 
 Tensor::Tensor() : Tensor({}, UINT8) {}
 
-Tensor::Tensor(echolib::any_container<size_t> dims, DataType dtype) : Array(multiply_dimensions(dims) * Tensor::get_type_bytes(dtype)), dimensions(dims->begin(), dims->end()), dtype(dtype)  {
+Tensor::Tensor(routio::any_container<size_t> dims, DataType dtype) : Array(multiply_dimensions(dims) * Tensor::get_type_bytes(dtype)), dimensions(dims->begin(), dims->end()), dtype(dtype)  {
 
 }
 
 
-Tensor::Tensor(echolib::any_container<size_t> dims, DataType dtype, uchar* data, DescructorCallback callback) : Array(multiply_dimensions(dims) * Tensor::get_type_bytes(dtype), data, callback), dimensions(dims->begin(), dims->end()), dtype(dtype) {
+Tensor::Tensor(routio::any_container<size_t> dims, DataType dtype, uchar* data, DescructorCallback callback) : Array(multiply_dimensions(dims) * Tensor::get_type_bytes(dtype), data, callback), dimensions(dims->begin(), dims->end()), dtype(dtype) {
 
 }
 
@@ -102,7 +102,7 @@ Tensor::~Tensor() {
 
 }
 
-#ifdef __ECHOLIB_HAS_OPENCV
+#ifdef __ROUTIO_HAS_OPENCV
 
 #ifndef CV_MAX_DIM
 const int CV_MAX_DIM = 32;

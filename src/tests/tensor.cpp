@@ -5,13 +5,13 @@
 #include <fstream>
 #include <memory>
 
-#include <echolib/client.h>
-#include <echolib/datatypes.h>
-#include <echolib/helpers.h>
-#include <echolib/array.h>
+#include <routio/client.h>
+#include <routio/datatypes.h>
+#include <routio/helpers.h>
+#include <routio/array.h>
 
 using namespace std;
-using namespace echolib;
+using namespace routio;
 
 SharedTensor frame;
 
@@ -41,7 +41,7 @@ void handle_frame(shared_ptr<SharedTensor> data) {
 
 int main(int argc, char** argv) {
 
-    SharedClient client = echolib::connect();
+    SharedClient client = routio::connect();
 
     frame = make_shared<Tensor>(initializer_list<size_t>{100, 100}, UINT8);
 
@@ -58,7 +58,7 @@ int main(int argc, char** argv) {
 
         image_publisher->send(frame);
 
-        if (!echolib::wait(100)) break;
+        if (!routio::wait(100)) break;
     }
 
     exit(-2);

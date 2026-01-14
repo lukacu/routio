@@ -1,13 +1,13 @@
 cmake_minimum_required(VERSION 3.11)
 
-project(echo CXX)
+project(routio CXX)
 set(PROJECT_VERSION 0.1.0)
 
 include(GNUInstallDirs)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-option(BUILD_APPS "Build echolib apps" ON)
+option(BUILD_APPS "Build routio apps" ON)
 option(BUILD_PYTHON "Build python wrapper" ON)
 option(BUILD_EXAMPLES "Build examples" OFF)
 option(BUILD_DEBUG "Enable debug output" OFF)
@@ -34,8 +34,8 @@ if(CMAKE_COMPILER_IS_GNUCXX)
 endif()
 
 if(BUILD_DEBUG)
-	add_definitions(-DECHOLIB_DEBUG)
-    add_definitions(-DECHOLIB_SOURCE_COMPILE_ROOT="${CMAKE_CURRENT_SOURCE_DIR}/src/")
+	add_definitions(-DROUTIO_DEBUG)
+    add_definitions(-DROUTIO_SOURCE_COMPILE_ROOT="${CMAKE_CURRENT_SOURCE_DIR}/src/")
 endif()
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src/ ${CMAKE_CURRENT_SOURCE_DIR}/include/)
@@ -52,35 +52,35 @@ set(ECHO_SRC
 )
 
 set(ECHO_HEADERS 
-    include/echolib/loop.h
-    include/echolib/client.h
-    include/echolib/camera.h
-    include/echolib/server.h
-    include/echolib/routing.h
-    include/echolib/message.h
-    include/echolib/datatypes.h
-    include/echolib/helpers.h
-    include/echolib/array.h
+    include/routio/loop.h
+    include/routio/client.h
+    include/routio/camera.h
+    include/routio/server.h
+    include/routio/routing.h
+    include/routio/message.h
+    include/routio/datatypes.h
+    include/routio/helpers.h
+    include/routio/array.h
 )
 
 # echo shared library
-add_library(echo SHARED ${ECHO_SRC})
+add_library(routio SHARED ${ECHO_SRC})
 
-target_compile_options(echo PUBLIC "-pthread")
-target_link_libraries(echo PUBLIC "pthread")
+target_compile_options(routio PUBLIC "-pthread")
+target_link_libraries(routio PUBLIC "pthread")
 
 if (BUILD_OPENCV)
-target_compile_definitions(echo PUBLIC "BUILD_OPENCV")
-TARGET_LINK_LIBRARIES(echo PUBLIC ${OpenCV_LIBS})
+target_compile_definitions(routio PUBLIC "BUILD_OPENCV")
+TARGET_LINK_LIBRARIES(routio PUBLIC ${OpenCV_LIBS})
 endif()
 
 #target_compile_options(echo_static PUBLIC "-pthread" "-fPIC")
 #target_link_libraries(echo_static PUBLIC "pthread")
 
-set_target_properties(echo PROPERTIES VERSION 0.0.0 SOVERSION 0)
+set_target_properties(routio PROPERTIES VERSION ${PROJECT_VERSION} SOVERSION 0)
 
-install(TARGETS echo EXPORT echolib_targets DESTINATION ${CMAKE_INSTALL_LIBDIR})
-install(FILES ${ECHO_HEADERS} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/echolib)
+install(TARGETS routio EXPORT routio_targets DESTINATION ${CMAKE_INSTALL_LIBDIR})
+install(FILES ${ECHO_HEADERS} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/routio)
 
 # CMake config file
 include(CMakePackageConfigHelpers)
@@ -88,43 +88,43 @@ include(CMakePackageConfigHelpers)
 set(LIB_INSTALL_DIR ${CMAKE_INSTALL_LIBDIR})
 set(INCLUDE_INSTALL_DIR ${CMAKE_INSTALL_INCLUDEDIR})
 
-configure_package_config_file(echolib-config.cmake.in
-    ${PROJECT_BINARY_DIR}/echolib-config.cmake
-    INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/echolib
+configure_package_config_file(routio-config.cmake.in
+    ${PROJECT_BINARY_DIR}/routio-config.cmake
+    INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/routio
     PATH_VARS LIB_INSTALL_DIR INCLUDE_INSTALL_DIR)
 
 write_basic_package_version_file(
-    ${PROJECT_BINARY_DIR}/echolib-config-version.cmake
+    ${PROJECT_BINARY_DIR}/routio-config-version.cmake
     VERSION ${PROJECT_VERSION}
     COMPATIBILITY SameMajorVersion)
 
 install(FILES
-    ${CMAKE_CURRENT_BINARY_DIR}/echolib-config.cmake
-    ${CMAKE_CURRENT_BINARY_DIR}/echolib-config-version.cmake
-    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/echolib)
+    ${CMAKE_CURRENT_BINARY_DIR}/routio-config.cmake
+    ${CMAKE_CURRENT_BINARY_DIR}/routio-config-version.cmake
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/routio)
 
 install(
-    EXPORT echolib_targets
-    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/echolib
-    FILE echolib-targets.cmake
+    EXPORT routio_targets
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/routio
+    FILE routio-targets.cmake
 )
 
 # echo daemon
 if(BUILD_APPS)
-    add_executable(echorouter src/apps/router.cpp)
-    target_link_libraries(echorouter echo)
-    install(TARGETS echorouter DESTINATION ${CMAKE_INSTALL_BINDIR})
+    add_executable(routio-router src/apps/router.cpp)
+    target_link_libraries(routio-router routio)
+    install(TARGETS routio-router DESTINATION ${CMAKE_INSTALL_BINDIR})
 
     if (BUILD_OPENCV)
-        ADD_EXECUTABLE(echo_camera src/apps/cameraserver.cpp)
-        TARGET_LINK_LIBRARIES(echo_camera echo ${OpenCV_LIBS})
-        ADD_EXECUTABLE(echo_image src/apps/imageserver.cpp)
-        TARGET_LINK_LIBRARIES(echo_image echo ${OpenCV_LIBS})
-        ADD_EXECUTABLE(echo_video src/apps/videoserver.cpp)
-        TARGET_LINK_LIBRARIES(echo_video echo ${OpenCV_LIBS})
-        ADD_EXECUTABLE(echo_client src/apps/videoclient.cpp)
-        TARGET_LINK_LIBRARIES(echo_client echo ${OpenCV_LIBS})
-        install(TARGETS echo_camera echo_image echo_video echo_client DESTINATION ${CMAKE_INSTALL_BINDIR})
+        ADD_EXECUTABLE(routio_camera src/apps/cameraserver.cpp)
+        TARGET_LINK_LIBRARIES(routio_camera routio ${OpenCV_LIBS})
+        ADD_EXECUTABLE(routio_image src/apps/imageserver.cpp)
+        TARGET_LINK_LIBRARIES(routio_image routio ${OpenCV_LIBS})
+        ADD_EXECUTABLE(routio_video src/apps/videoserver.cpp)
+        TARGET_LINK_LIBRARIES(routio_video routio ${OpenCV_LIBS})
+        ADD_EXECUTABLE(routio_client src/apps/videoclient.cpp)
+        TARGET_LINK_LIBRARIES(routio_client routio ${OpenCV_LIBS})
+        install(TARGETS routio_camera routio_image routio_video routio_client DESTINATION ${CMAKE_INSTALL_BINDIR})
         
     endif()
 endif()
@@ -136,27 +136,27 @@ if(BUILD_PYTHON)
     ADD_CUSTOM_TARGET(copy_library_python ALL)
 
     SET(BUILD_PYTHON_DIR "${CMAKE_BINARY_DIR}/python")
-    FILE(MAKE_DIRECTORY ${BUILD_PYTHON_DIR}/echolib)
+    FILE(MAKE_DIRECTORY ${BUILD_PYTHON_DIR}/routio)
 
     IF(BUILD_PYTHON_SOURCE)
 
-        FILE(MAKE_DIRECTORY ${BUILD_PYTHON_DIR}/echolib/echolib)
+        FILE(MAKE_DIRECTORY ${BUILD_PYTHON_DIR}/routio/routio)
 
         ADD_CUSTOM_COMMAND(TARGET copy_library_python COMMAND 
             ${CMAKE_COMMAND} -E chdir ${CMAKE_SOURCE_DIR} 
             ${CMAKE_COMMAND} -E copy ${ECHO_SRC} src/python/wrapper.cpp src/algorithms.h src/debug.h
-            ${BUILD_PYTHON_DIR}/echolib/echolib)
-        ADD_CUSTOM_COMMAND(TARGET copy_library_python COMMAND ${CMAKE_COMMAND} -E chdir ${CMAKE_SOURCE_DIR} ${CMAKE_COMMAND} -E copy ${ECHO_HEADERS} ${BUILD_PYTHON_DIR}/echolib/echolib)
+            ${BUILD_PYTHON_DIR}/routio/routio)
+        ADD_CUSTOM_COMMAND(TARGET copy_library_python COMMAND ${CMAKE_COMMAND} -E chdir ${CMAKE_SOURCE_DIR} ${CMAKE_COMMAND} -E copy ${ECHO_HEADERS} ${BUILD_PYTHON_DIR}/routio/routio)
 
     ELSE()
 
         find_path(PYBIND11_INCLUDE_DIR pybind11/pybind11.h HINTS /usr/include DOC "PyBind11 include directory")
         find_package(Python REQUIRED COMPONENTS Interpreter Development NumPy)
 
-        add_library(pyecho SHARED src/python/wrapper.cpp ${ECHO_SRC})
-        set_target_properties(pyecho PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${BUILD_PYTHON_DIR}/echolib)
-        set_target_properties(pyecho PROPERTIES PREFIX "")
-        target_include_directories(pyecho PRIVATE ${Python_INCLUDE_DIRS} ${PYBIND11_INCLUDE_DIR})
+        add_library(pyroutio SHARED src/python/wrapper.cpp ${ECHO_SRC})
+        set_target_properties(pyroutio PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${BUILD_PYTHON_DIR}/routio)
+        set_target_properties(pyroutio PROPERTIES PREFIX "")
+        target_include_directories(pyroutio PRIVATE ${Python_INCLUDE_DIRS} ${PYBIND11_INCLUDE_DIR})
 
         install(CODE "execute_process(COMMAND ${Python_EXECUTABLE} setup.py install WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/python)")
 
@@ -164,25 +164,25 @@ if(BUILD_PYTHON)
 
 
     SET(SOURCES_PY 
-        ${CMAKE_CURRENT_SOURCE_DIR}/python/echolib/__init__.py
-        ${CMAKE_CURRENT_SOURCE_DIR}/python/echolib/__main__.py
-        ${CMAKE_CURRENT_SOURCE_DIR}/python/echolib/ignition.py
-        ${CMAKE_CURRENT_SOURCE_DIR}/python/echolib/tornado.py
-        ${CMAKE_CURRENT_SOURCE_DIR}/python/echolib/_image.py
-        ${CMAKE_CURRENT_SOURCE_DIR}/python/echolib/messages/__main__.py
-        ${CMAKE_CURRENT_SOURCE_DIR}/python/echolib/messages/library/__init__.py
-        ${CMAKE_CURRENT_SOURCE_DIR}/python/echolib/messages/library/geometry.msg
-        ${CMAKE_CURRENT_SOURCE_DIR}/python/echolib/messages/templates/__init__.py
-        ${CMAKE_CURRENT_SOURCE_DIR}/python/echolib/messages/templates/cpp.tpl
-        ${CMAKE_CURRENT_SOURCE_DIR}/python/echolib/messages/templates/python.tpl
-        ${CMAKE_CURRENT_SOURCE_DIR}/python/echolib/messages/__init__.py
-        ${CMAKE_CURRENT_SOURCE_DIR}/python/echolib/messages/cli.py
+        ${CMAKE_CURRENT_SOURCE_DIR}/python/routio/__init__.py
+        ${CMAKE_CURRENT_SOURCE_DIR}/python/routio/__main__.py
+        ${CMAKE_CURRENT_SOURCE_DIR}/python/routio/ignition.py
+        ${CMAKE_CURRENT_SOURCE_DIR}/python/routio/tornado.py
+        ${CMAKE_CURRENT_SOURCE_DIR}/python/routio/_image.py
+        ${CMAKE_CURRENT_SOURCE_DIR}/python/routio/messages/__main__.py
+        ${CMAKE_CURRENT_SOURCE_DIR}/python/routio/messages/library/__init__.py
+        ${CMAKE_CURRENT_SOURCE_DIR}/python/routio/messages/library/geometry.msg
+        ${CMAKE_CURRENT_SOURCE_DIR}/python/routio/messages/templates/__init__.py
+        ${CMAKE_CURRENT_SOURCE_DIR}/python/routio/messages/templates/cpp.tpl
+        ${CMAKE_CURRENT_SOURCE_DIR}/python/routio/messages/templates/python.tpl
+        ${CMAKE_CURRENT_SOURCE_DIR}/python/routio/messages/__init__.py
+        ${CMAKE_CURRENT_SOURCE_DIR}/python/routio/messages/cli.py
     )
 
 
     ADD_CUSTOM_COMMAND(TARGET copy_library_python COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_SOURCE_DIR}/python/setup.py ${BUILD_PYTHON_DIR}/)
     ADD_CUSTOM_COMMAND(TARGET copy_library_python COMMAND ${CMAKE_COMMAND} -E copy_if_different ${CMAKE_CURRENT_SOURCE_DIR}/python/pyproject.toml ${BUILD_PYTHON_DIR}/)
-    ADD_CUSTOM_COMMAND(TARGET copy_library_python COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/python/echolib ${BUILD_PYTHON_DIR}/echolib)
+    ADD_CUSTOM_COMMAND(TARGET copy_library_python COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/python/routio ${BUILD_PYTHON_DIR}/routio)
 
 
 endif()
@@ -190,21 +190,21 @@ endif()
 # Examples
 if(BUILD_EXAMPLES)
     add_executable(chat src/examples/chat.cpp)
-    target_link_libraries(chat echo)
+    target_link_libraries(chat routio)
 
     add_executable(chunked src/examples/chunked.cpp)
-    target_link_libraries(chunked echo)
+    target_link_libraries(chunked routio)
 endif()
 
 # Examples
 if(BUILD_TESTS)
     add_executable(deadend src/tests/deadend.cpp)
-    target_link_libraries(deadend echo)
+    target_link_libraries(deadend routio)
 
     add_executable(dynamic_client src/tests/dynamic_client.cpp)
-    target_link_libraries(dynamic_client echo)
+    target_link_libraries(dynamic_client routio)
 
     add_executable(test_tensor src/tests/tensor.cpp)
-    target_link_libraries(test_tensor echo)
+    target_link_libraries(test_tensor routio)
 
 endif()

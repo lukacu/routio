@@ -90,7 +90,7 @@ Instead of defining types and using TypedPublisher and TypedSubscriber you can d
                 reader.copy_data(data.data, data.cols * data.rows * data.elemSize());
 
                 callback(data);
-            } catch (echolib::ParseException &e) {
+            } catch (routio::ParseException &e) {
                 Subscriber::on_error(e);
             }
         };

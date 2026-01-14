@@ -7,18 +7,18 @@
 #include <chrono>
 #include <opencv2/opencv.hpp>
 
-#include <echolib/client.h>
-#include <echolib/datatypes.h>
-#include <echolib/helpers.h>
-#include <echolib/camera.h>
+#include <routio/client.h>
+#include <routio/datatypes.h>
+#include <routio/helpers.h>
+#include <routio/camera.h>
 
 using namespace std;
-using namespace echolib;
+using namespace routio;
 using namespace cv;
 
 int main(int argc, char** argv) {
 
-    SharedClient client = echolib::connect(string(), "videoclient");
+    SharedClient client = routio::connect(string(), "videoclient");
 
     shared_ptr<Frame> frame;
     Mat canvas;
@@ -54,7 +54,7 @@ int main(int argc, char** argv) {
             incoming = false;
         }
 
-        if (!echolib::wait(20)) break;
+        if (!routio::wait(20)) break;
         if (!waitKey(1) && !headless) break;
     }
 

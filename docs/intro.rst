@@ -1,4 +1,4 @@
-Introduction to Echo
+Introduction to Routio
 ================================
 
 Echo is a inter-process communication library for C++ and Python focused on performance and ease of use. It provides a publish/subscribe model for message passing and a simple data marshalling system with minimal overhead. If advanced data marshalling is required, various third party solutions (such as Flat Buffers) are supported.

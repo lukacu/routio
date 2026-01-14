@@ -11,12 +11,12 @@
 #include <cmath>
 
 #include "debug.h"
-#include <echolib/message.h>
+#include <routio/message.h>
 #include "algorithms.h"
 
 using namespace std;
 
-namespace echolib
+namespace routio
 {
 
 #define MESSAGE_DELIMITER ((char)0x0F)

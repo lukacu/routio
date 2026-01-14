@@ -1,17 +1,17 @@
 import time
 import multiprocessing
-import echolib
+import routio
 import random
 
 def client_worker(client_id, all_channels, duration):
 
-    loop = echolib.IOLoop()
+    loop = routio.IOLoop()
 
-    client = echolib.Client()
+    client = routio.Client()
     loop.add_handler(client)
     
     # Set up publishers for each channel (each client sends to all channels)
-    pubs = [echolib.Publisher(client, channel, "i") for channel in all_channels]
+    pubs = [routio.Publisher(client, channel, "i") for channel in all_channels]
     
     # Set up counters for received messages
     recv_count = 0
@@ -24,7 +24,7 @@ def client_worker(client_id, all_channels, duration):
         return callback
 
     # Subscribe to all channels with dummy callbacks
-    subs = [echolib.Subscriber(client, channel, "i", make_callback()) for channel in all_channels]
+    subs = [routio.Subscriber(client, channel, "i", make_callback()) for channel in all_channels]
 
     sent_count = 0
     start_time = time.time()
@@ -32,7 +32,7 @@ def client_worker(client_id, all_channels, duration):
     # Send messages repeatedly during the test window
     while time.time() - start_time < duration:
         for pub in pubs:
-            writer = echolib.MessageWriter()
+            writer = routio.MessageWriter()
             writer.writeString(f"client_{client_id}")
             # Generate random length payload for stress testing
             payload_length = random.randint(1, 10000)

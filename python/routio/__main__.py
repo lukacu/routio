@@ -10,11 +10,11 @@ import argparse
 import sys
 
 def main():
-    from echolib import router
+    from routio import router
 
     parser = argparse.ArgumentParser()
     parser.add_argument("-v", "--verbose", action="store_true", default=False)
-    parser.add_argument("bind", nargs='?', default=os.environ.get("ECHOLIB_SOCKET", "/tmp/echo.sock"))
+    parser.add_argument("bind", nargs='?', default=os.environ.get("ROUTIO_SOCKET", "/tmp/echo.sock"))
 
     try:
         args = parser.parse_args()

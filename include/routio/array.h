@@ -1,18 +1,18 @@
-#ifndef __ECHOLIB_ARRAY_H
-#define __ECHOLIB_ARRAY_H
+#ifndef __ROUTIO_ARRAY_H
+#define __ROUTIO_ARRAY_H
 
-#include <echolib/client.h>
-#include <echolib/datatypes.h>
+#include <routio/client.h>
+#include <routio/datatypes.h>
 
 using namespace std;
-using namespace echolib;
+using namespace routio;
 
 #ifdef CV_VERSION_MAJOR
-#define __ECHOLIB_HAS_OPENCV 1
+#define __ROUTIO_HAS_OPENCV 1
 #endif
 
 
-namespace echolib {
+namespace routio {
 
 enum DataType { UINT8 = 1, UINT16 = 2, UINT32 = 3, INT8 = 4, INT16 = 5, INT32 = 6, FLOAT32 = 10, FLOAT64 = 11 };
 
@@ -49,11 +49,11 @@ public:
 
     Tensor();
 
-    Tensor(echolib::any_container<size_t> dimensions, DataType dtype = UINT8);
+    Tensor(routio::any_container<size_t> dimensions, DataType dtype = UINT8);
 
-    Tensor(echolib::any_container<size_t> dimensions, DataType dtype, uchar* data, DescructorCallback callback);
+    Tensor(routio::any_container<size_t> dimensions, DataType dtype, uchar* data, DescructorCallback callback);
 
-#ifdef __ECHOLIB_HAS_OPENCV
+#ifdef __ROUTIO_HAS_OPENCV
     static DataType decode_ocvtype(int cvtype);
 
     static int encode_ocvtype(DataType dtype);

@@ -15,13 +15,13 @@
 #include <netinet/in.h>
 
 #include "debug.h"
-#include <echolib/message.h>
-#include <echolib/client.h>
-#include <echolib/datatypes.h>
+#include <routio/message.h>
+#include <routio/client.h>
+#include <routio/datatypes.h>
 
 #define MAXEVENTS 8
 
-namespace echolib
+namespace routio
 {
 
     static int make_socket_non_blocking(int sfd)
@@ -53,9 +53,9 @@ namespace echolib
 
         if (temp.empty())
         {
-            if (getenv("ECHOLIB_SOCKET") != NULL)
+            if (getenv("ROUTIO_SOCKET") != NULL)
             {
-                temp = string(getenv("ECHOLIB_SOCKET"));
+                temp = string(getenv("ROUTIO_SOCKET"));
             }
             else
             {
@@ -157,9 +157,9 @@ namespace echolib
 
     void Client::initialize_common()
     {
-        if (getenv("ECHOLIB_MAP") != NULL)
+        if (getenv("ROUTIO_MAP") != NULL)
         {
-            string s(getenv("ECHOLIB_MAP"));
+            string s(getenv("ROUTIO_MAP"));
 
             size_t last = 0, next = 0;
             string token;

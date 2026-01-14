@@ -43,7 +43,7 @@ using namespace std;
 #define MESSAGE_MAX_SIZE 1024 * 1024
 #define MESSAGE_MAX_QUEUE 5000
 
-namespace echolib
+namespace routio
 {
 
     template <bool B, typename T = void>
@@ -790,7 +790,7 @@ namespace echolib
 
 #include <type_traits>
 
-namespace echolib
+namespace routio
 {
 
     template <>

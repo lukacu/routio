@@ -6,11 +6,11 @@
 #include <thread>
 #include <chrono>
 
-#include <echolib/client.h>
-#include <echolib/datatypes.h>
+#include <routio/client.h>
+#include <routio/datatypes.h>
 
 using namespace std;
-using namespace echolib;
+using namespace routio;
 
 int main(int argc, char** argv) {
 
@@ -18,7 +18,7 @@ int main(int argc, char** argv) {
 
     for (int i = 0; i < 100; i++) {
 
-        SharedClient client = make_shared<echolib::Client>();
+        SharedClient client = make_shared<routio::Client>();
 
         cout << "Adding handler" << endl;
 

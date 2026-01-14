@@ -8,13 +8,13 @@
 #include <algorithm>
 
 #include "debug.h"
-#include <echolib/loop.h>
+#include <routio/loop.h>
 
 using namespace std;
 
 #define MAXEVENTS 16
 
-namespace echolib {
+namespace routio {
 	
 IOLoop::IOLoop() {
 

@@ -1,7 +1,7 @@
-#include <echolib/datatypes.h>
-#include <echolib/array.h>
+#include <routio/datatypes.h>
+#include <routio/array.h>
 
-namespace echolib {
+namespace routio {
 
 typedef struct CameraIntrinsics {
     int width;
@@ -23,7 +23,7 @@ typedef struct Frame {
 
 template <> inline string get_type_identifier<CameraExtrinsics>() { return string("camera extrinsics"); }
 
-template<> inline shared_ptr<Message> echolib::Message::pack<CameraExtrinsics>(const CameraExtrinsics &data)
+template<> inline shared_ptr<Message> routio::Message::pack<CameraExtrinsics>(const CameraExtrinsics &data)
 {
     MessageWriter writer;
 
@@ -34,7 +34,7 @@ template<> inline shared_ptr<Message> echolib::Message::pack<CameraExtrinsics>(c
     return make_shared<BufferedMessage>(writer);
 }
 
-template<> inline shared_ptr<CameraExtrinsics> echolib::Message::unpack<CameraExtrinsics>(SharedMessage message)
+template<> inline shared_ptr<CameraExtrinsics> routio::Message::unpack<CameraExtrinsics>(SharedMessage message)
 {
     MessageReader reader(message);
 
@@ -47,7 +47,7 @@ template<> inline shared_ptr<CameraExtrinsics> echolib::Message::unpack<CameraEx
 
 template <> inline string get_type_identifier<CameraIntrinsics>() { return string("camera intrinsics"); }
 
-template<> inline shared_ptr<Message> echolib::Message::pack<CameraIntrinsics>(const CameraIntrinsics &data)
+template<> inline shared_ptr<Message> routio::Message::pack<CameraIntrinsics>(const CameraIntrinsics &data)
 {
     MessageWriter writer;
 
@@ -59,7 +59,7 @@ template<> inline shared_ptr<Message> echolib::Message::pack<CameraIntrinsics>(c
     return make_shared<BufferedMessage>(writer);
 }
 
-template<> inline shared_ptr<CameraIntrinsics> echolib::Message::unpack<CameraIntrinsics>(SharedMessage message)
+template<> inline shared_ptr<CameraIntrinsics> routio::Message::unpack<CameraIntrinsics>(SharedMessage message)
 {
     MessageReader reader(message);
 
@@ -74,7 +74,7 @@ template<> inline shared_ptr<CameraIntrinsics> echolib::Message::unpack<CameraIn
 template <> inline string get_type_identifier<Frame>() { return string("camera frame"); }
 
 
-template<> inline shared_ptr<Message> echolib::Message::pack<Frame>(const Frame &data) {
+template<> inline shared_ptr<Message> routio::Message::pack<Frame>(const Frame &data) {
 
     return make_shared<MultiBufferMessage>(initializer_list<SharedBuffer>{
         pack<Header>(data.header),
@@ -83,7 +83,7 @@ template<> inline shared_ptr<Message> echolib::Message::pack<Frame>(const Frame 
 
 }
 
-template<> inline shared_ptr<Frame> echolib::Message::unpack<Frame>(SharedMessage message) {
+template<> inline shared_ptr<Frame> routio::Message::unpack<Frame>(SharedMessage message) {
     MessageReader reader(message);
 
     shared_ptr<Frame> result(new Frame());

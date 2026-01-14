@@ -1,11 +1,11 @@
 
 import unittest
 
-from echolib import Client, IOLoop
+from routio import Client, IOLoop
 
 class Tests(unittest.TestCase):
 
     def test_tensor(self):
-        from echolib.array import TensorPublisher, TensorSubscriber
+        from routio.array import TensorPublisher, TensorSubscriber
 
         client = Client()

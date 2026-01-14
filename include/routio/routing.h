@@ -3,15 +3,15 @@
 #ifndef ECHO_ROUTING_HPP_
 #define ECHO_ROUTING_HPP_
 
-#include <echolib/message.h>
-#include <echolib/server.h>
+#include <routio/message.h>
+#include <routio/server.h>
 #include <map>
 #include <vector>
 #include <set>
 
 using namespace std;
 
-namespace echolib
+namespace routio
 {
 
   class Channel

@@ -24,7 +24,7 @@ The message.h header defines various message types and classes used for encoding
 
 Client
 ######
-The client.h header defines classes that are used by echo's users to connect to the daemon. It defines the basic client, subscriber and watcher classes that are used to connect to and communicate with the daemon. It also defines the advanced ChunkedSubscriber variant of the subscriber class that allows for the automatic splitting of messages.
+The client.h header defines classes that are used by routio's users to connect to the daemon. It defines the basic client, subscriber and watcher classes that are used to connect to and communicate with the daemon. It also defines the advanced ChunkedSubscriber variant of the subscriber class that allows for the automatic splitting of messages.
 
 Datatypes
 #########
@@ -36,4 +36,4 @@ Python.cpp uses pybind11 to define python bindings of the library
 
 Debug
 #####
-The debug.h header defines helper methods used for logging and debugging of applications that use echo.
+The debug.h header defines helper methods used for logging and debugging of applications that use routio.

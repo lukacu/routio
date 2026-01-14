@@ -6,11 +6,11 @@ from __future__ import unicode_literals
 from builtins import super
 from future import standard_library
 standard_library.install_aliases()
-import echolib
+import routio
 import numpy
 
 try:
-    from echolib import _echo
+    from routio import _echo
 except ImportError as ie:
     raise ImportError("Echo binary library not found", ie)
 
@@ -40,7 +40,7 @@ class CameraIntrinsics(object):
 
 class CameraExtrinsics(object):
 
-    def __init__(self, header = echolib.Header(), rotation=numpy.eye(3), translation=numpy.empty((1, 3))):
+    def __init__(self, header = routio.Header(), rotation=numpy.eye(3), translation=numpy.empty((1, 3))):
         self.header = header
         self.rotation = rotation
         self.translation = translation
@@ -48,96 +48,96 @@ class CameraExtrinsics(object):
     @staticmethod
     def read(reader):
         obj = CameraExtrinsics()
-        obj.header = echolib.readType(echolib.Header, reader)
+        obj.header = routio.readType(routio.Header, reader)
         obj.rotation = _echo.readTensor(reader)
         obj.translation = _echo.readTensor(reader)
         return obj
 
     @staticmethod
     def write(writer, obj):
-        echolib.writeType(echolib.Header, writer, obj.header)
+        routio.writeType(routio.Header, writer, obj.header)
         _echo.writeTensor(writer, obj.rotation)
         _echo.writeTensor(writer, obj.translation)
 
-echolib.registerType(numpy.array, _echo.readTensor, _echo.writeTensor)
-echolib.registerType(CameraIntrinsics, CameraIntrinsics.read, CameraIntrinsics.write)
-echolib.registerType(CameraExtrinsics, CameraExtrinsics.read, CameraExtrinsics.write)
+routio.registerType(numpy.array, _echo.readTensor, _echo.writeTensor)
+routio.registerType(CameraIntrinsics, CameraIntrinsics.read, CameraIntrinsics.write)
+routio.registerType(CameraExtrinsics, CameraExtrinsics.read, CameraExtrinsics.write)
 
 class Frame(object):
 
-    def __init__(self, header = echolib.Header(), image = numpy.array(())):
+    def __init__(self, header = routio.Header(), image = numpy.array(())):
         self.header = header
         self.image = image
 
     @staticmethod
     def read(reader):
         obj = Frame()
-        obj.header = echolib.readType(echolib.Header, reader)
+        obj.header = routio.readType(routio.Header, reader)
         obj.image = _echo.readTensor(reader)
         return obj
 
     @staticmethod
     def write(writer, obj):
-        echolib.writeType(echolib.Header, writer, obj.header)
+        routio.writeType(routio.Header, writer, obj.header)
         _echo.writeTensor(writer, obj.image)
 
-echolib.registerType(Frame, Frame.read, Frame.write)
+routio.registerType(Frame, Frame.read, Frame.write)
 
-class CameraIntrinsicsSubscriber(echolib.Subscriber):
+class CameraIntrinsicsSubscriber(routio.Subscriber):
 
     def __init__(self, client, alias, callback):
         def _read(message):
-            reader = echolib.MessageReader(message)
+            reader = routio.MessageReader(message)
             return CameraIntrinsics.read(reader)
 
         super().__init__(client, alias, "camera intrinsics", lambda x: callback(_read(x)))
 
 
-class CameraIntrinsicsPublisher(echolib.Publisher):
+class CameraIntrinsicsPublisher(routio.Publisher):
 
     def __init__(self, client, alias):
         super().__init__(client, alias, "camera intrinsics")
 
     def send(self, obj):
-        writer = echolib.MessageWriter()
+        writer = routio.MessageWriter()
         CameraIntrinsics.write(writer, obj)
         super().send(writer)
 
-class CameraExtrinsicsSubscriber(echolib.Subscriber):
+class CameraExtrinsicsSubscriber(routio.Subscriber):
 
     def __init__(self, client, alias, callback):
         def _read(message):
-            reader = echolib.MessageReader(message)
+            reader = routio.MessageReader(message)
             return CameraExtrinsics.read(reader)
 
         super().__init__(client, alias, "camera extrinsics", lambda x: callback(_read(x)))
 
 
-class CameraIntrinsicsPublisher(echolib.Publisher):
+class CameraIntrinsicsPublisher(routio.Publisher):
 
     def __init__(self, client, alias):
         super().__init__(client, alias, "camera extrinsics")
 
     def send(self, obj):
-        writer = echolib.MessageWriter()
+        writer = routio.MessageWriter()
         CameraExtrinsics.write(writer, obj)
         super().send(writer)
 
-class FrameSubscriber(echolib.Subscriber):
+class FrameSubscriber(routio.Subscriber):
 
     def __init__(self, client, alias, callback):
         def _read(message):
-            reader = echolib.MessageReader(message)
+            reader = routio.MessageReader(message)
             return Frame.read(reader)
 
         super().__init__(client, alias, "camera frame", lambda x: callback(_read(x)))
 
-class FramePublisher(echolib.Publisher):
+class FramePublisher(routio.Publisher):
 
     def __init__(self, client, alias, queue=1):
         super().__init__(client, alias, "camera frame", queue)
 
     def send(self, obj):
-        writer = echolib.MessageWriter()
+        writer = routio.MessageWriter()
         Frame.write(writer, obj)
         super().send(writer)

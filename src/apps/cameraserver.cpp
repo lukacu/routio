@@ -6,14 +6,14 @@
 #include <chrono>
 #include <opencv2/opencv.hpp>
 
-#include <echolib/client.h>
-#include <echolib/datatypes.h>
-#include <echolib/helpers.h>
-#include <echolib/loop.h>
-#include <echolib/camera.h>
+#include <routio/client.h>
+#include <routio/datatypes.h>
+#include <routio/helpers.h>
+#include <routio/loop.h>
+#include <routio/camera.h>
 
 using namespace std;
-using namespace echolib;
+using namespace routio;
 using namespace cv;
 
 CameraIntrinsics parameters;
@@ -24,7 +24,7 @@ int main(int argc, char** argv) {
 
     int cameraid = (argc < 2 ? 0 : atoi(argv[1]));
 
-    SharedClient client = echolib::connect(string(), "cameraserver");
+    SharedClient client = routio::connect(string(), "cameraserver");
 
     VideoCapture device;
     Mat image, image_rgb;
@@ -95,7 +95,7 @@ int main(int argc, char** argv) {
         
         auto delta_ms_duration = std::chrono::duration_cast<std::chrono::milliseconds>(delta_ms);
 
-        if (!echolib::wait(max(10, (int) delta_ms_duration.count()))) break;
+        if (!routio::wait(max(10, (int) delta_ms_duration.count()))) break;
     }
 
     exit(0);

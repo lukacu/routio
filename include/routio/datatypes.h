@@ -5,10 +5,10 @@
 
 #include <chrono>
 
-#include <echolib/client.h>
-#include <echolib/message.h>
+#include <routio/client.h>
+#include <routio/message.h>
 
-namespace echolib {
+namespace routio {
 
 template<typename T> string get_type_identifier();
 
@@ -31,7 +31,7 @@ class TypedSubscriber : Subscriber {
 
             callback(data);
 
-        } catch (echolib::ParseException &e) {
+        } catch (routio::ParseException &e) {
             Subscriber::on_error(e);
         }
 

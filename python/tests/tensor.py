@@ -1,6 +1,6 @@
 
 
-from echolib import Client, IOLoop
+from routio import Client, IOLoop
 
 import numpy as np
 
@@ -10,7 +10,7 @@ def test(t):
     np.testing.assert_array_equal(t, data, verbose=True)
 
 def main():
-    from echolib.array import TensorPublisher, TensorSubscriber
+    from routio.array import TensorPublisher, TensorSubscriber
 
     loop = IOLoop()
     client = Client()

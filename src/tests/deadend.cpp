@@ -6,15 +6,15 @@
 #include <thread>
 #include <chrono>
 
-#include <echolib/client.h>
-#include <echolib/datatypes.h>
+#include <routio/client.h>
+#include <routio/datatypes.h>
 
 using namespace std;
-using namespace echolib;
+using namespace routio;
 
 #define DELIMITER "$ "
 
-namespace echolib {
+namespace routio {
 
 
 template <> inline string get_type_identifier<string>() { return string("string"); }
@@ -55,7 +55,7 @@ std::string random_string( size_t length )
 
 int main(int argc, char** argv) {
 
-    SharedClient client = echolib::connect();
+    SharedClient client = routio::connect();
 
     if (argc > 1) {
 
@@ -68,7 +68,7 @@ int main(int argc, char** argv) {
 
         TypedSubscriber<string> sub(client, "deadend", callback);
 
-        while(echolib::wait(1)) {
+        while(routio::wait(1)) {
             // We have to give the write thread some space
             std::this_thread::sleep_for(std::chrono::milliseconds((int)( 1000.0 / frequency)));
         }
@@ -78,7 +78,7 @@ int main(int argc, char** argv) {
         TypedPublisher<string> pub(client, "deadend");
 
 
-        while(echolib::wait(10)) {
+        while(routio::wait(10)) {
             string data = random_string(1000);
             pub.send(data);
         }

@@ -12,9 +12,9 @@ import logging
 
 import jinja2
 
-from echolib.messages import MessagesRegistry, parseFile, formatConstant, DescriptionError, set_default_language
-from echolib.messages.library import library_path
-from echolib.messages.templates import templates_path
+from routio.messages import MessagesRegistry, parseFile, formatConstant, DescriptionError, set_default_language
+from routio.messages.library import library_path
+from routio.messages.templates import templates_path
 
 logger = logging.getLogger("echomsg")
 

@@ -30,13 +30,13 @@ RUN python --version && cmake --version && gcc-8 --version
 RUN git clone -b v2.8 https://github.com/pybind/pybind11.git && cd pybind11 && mkdir build && cd build && \
 cmake -DPYBIND11_TEST=OFF -DPYBIND11_INSTALL=ON .. && make -j install
 
-COPY . /tmp/echolib/
+COPY . /tmp/routio/
 
-RUN cd /tmp/echolib && mkdir build && cd build && \
+RUN cd /tmp/routio && mkdir build && cd build && \
     cmake -DBUILD_APPS=OFF -DCMAKE_INSTALL_PREFIX=/tmp/install .. && make -j && make install
 
 RUN export PYTHON_INSTALL=`python -c "from distutils.sysconfig import get_python_lib; print(get_python_lib(prefix='/tmp/install/'))"` && \
-    mkdir -p ${PYTHON_INSTALL}/../dist-packages/echolib && cd /tmp/echolib/build/python/ && cp -R echolib ${PYTHON_INSTALL}/../dist-packages/
+    mkdir -p ${PYTHON_INSTALL}/../dist-packages/routio && cd /tmp/routio/build/python/ && cp -R routio ${PYTHON_INSTALL}/../dist-packages/
 
 FROM ubuntu:${UBUNTU_VERSION}
 

@@ -17,7 +17,7 @@ import logging
 
 from collections import OrderedDict
 
-from echolib.messages.syntax import parse, DescriptionError
+from routio.messages.syntax import parse, DescriptionError
 
 LANGUAGES = ["cpp", "python"]
 
@@ -128,11 +128,11 @@ class MessagesRegistry(object):
         self.types = OrderedDict()
         self.add_type(ExternalType("short", {"python" : "int", "cpp": "int16_t"}, 0))
         self.add_type(ExternalType("int", {"python" : "int", "cpp": "int32_t"}, 0))
-        self.add_type(ExternalType("long", {"python" : "echolib.long", "cpp": "int64_t"}, 0))
+        self.add_type(ExternalType("long", {"python" : "routio.long", "cpp": "int64_t"}, 0))
         self.add_type(ExternalType("float", {"python" : "float", "cpp": "float"}, 0.0))
-        self.add_type(ExternalType("double", {"python" : "echolib.double", "cpp": "double"}, 0.0))
+        self.add_type(ExternalType("double", {"python" : "routio.double", "cpp": "double"}, 0.0))
         self.add_type(ExternalType("bool", {"python" : "bool", "cpp": "bool"}, False))
-        self.add_type(ExternalType("char", {"python" : "echolib.char", "cpp": "char"}, '\0'))
+        self.add_type(ExternalType("char", {"python" : "routio.char", "cpp": "char"}, '\0'))
         self.add_type(ExternalType("string", {"python" : "str", "cpp": "std::string"}, ""))
 
         self.add_type(ExternalType("timestamp", {
@@ -141,27 +141,27 @@ class MessagesRegistry(object):
         }))
 
         self.add_type(ExternalType("header", {
-            "python" : "echolib.Header",
-            "cpp": "echolib::Header"
+            "python" : "routio.Header",
+            "cpp": "routio::Header"
         }, default={
-            "python" : Source("echolib.Header()"),
-            "cpp": Source("echolib::Header()")
+            "python" : Source("routio.Header()"),
+            "cpp": Source("routio::Header()")
         }))
 
         self.add_type(ExternalType("array", {
             "python" : "numpy.ndarray",
-            "cpp": "echolib::Array"
+            "cpp": "routio::Array"
         }, default={
             "python" : Source("numpy.zeros((0,))"),
-            "cpp": Source("echolib::Array()")
+            "cpp": Source("routio::Array()")
         }))
 
         self.add_type(ExternalType("tensor", {
             "python" : "numpy.ndarray",
-            "cpp": "echolib::Array"
+            "cpp": "routio::Array"
         }, default={
             "python" : Source("numpy.zeros((0,))"),
-            "cpp": Source("echolib::Tensor()")
+            "cpp": Source("routio::Tensor()")
         }))
 
         self.structs = OrderedDict()
@@ -171,9 +171,9 @@ class MessagesRegistry(object):
         self.sources = {l : [] for l in LANGUAGES}
         self.sources["cpp"].append("vector")
         self.sources["cpp"].append("chrono")
-        self.sources["cpp"].append("echolib/datatypes.h")
-        self.sources["cpp"].append("echolib/array.h")
-        self.sources["python"].append("echolib")
+        self.sources["cpp"].append("routio/datatypes.h")
+        self.sources["cpp"].append("routio/array.h")
+        self.sources["python"].append("routio")
         self.sources["python"].append("datetime")
         self.sources["python"].append("numpy")
         

@@ -5,17 +5,17 @@
 #include <string>
 #include <mutex>
 
-#include <echolib/client.h>
-#include <echolib/datatypes.h>
+#include <routio/client.h>
+#include <routio/datatypes.h>
 
 using namespace std;
-using namespace echolib;
+using namespace routio;
 
 #define DELIMITER "$ "
 
-namespace echolib {
+namespace routio {
 
-//template <> inline string get_type_identifier<echolib::Dictionary>() { return string("dictionary"); }
+//template <> inline string get_type_identifier<routio::Dictionary>() { return string("dictionary"); }
 
 
 template <> inline string get_type_identifier<pair<string, string> >() { return string("string pair"); }
@@ -50,7 +50,7 @@ int main(int argc, char** argv) {
     }
 
     //Connect to local socket based daemon
-    SharedClient client = make_shared<echolib::Client>(address);
+    SharedClient client = make_shared<routio::Client>(address);
     loop->add_handler(client);
 
     string name;

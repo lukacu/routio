@@ -21,7 +21,7 @@ class get_numpy_include(object):
         return numpy.get_include()
 
 root = os.path.abspath(os.path.dirname(__file__))
-platform = os.getenv("ECHOLIB_PYTHON_PLATFORM", sys.platform)
+platform = os.getenv("ROUTIO_PYTHON_PLATFORM", sys.platform)
 
 if platform.startswith('linux'):
     library_suffix = '.so'
@@ -93,28 +93,28 @@ try:
 except ImportError:
     pass
 
-if os.path.isfile(os.path.join("echolib", "pyecho" + library_suffix)):
-    varargs["package_data"]["echolib"] = ["pyecho" + library_suffix]
+if os.path.isfile(os.path.join("routio", "pyroutio" + library_suffix)):
+    varargs["package_data"]["routio"] = ["pyroutio" + library_suffix]
 
-elif os.path.isfile(os.path.join("echolib", "echolib", "loop.h")):
-    sources = glob.glob("echolib/echolib/*.cpp")
-    args = dict(sources=sources, include_dirs=[os.path.join(root, "echolib"), get_numpy_include(), get_pybind_include()], define_macros=[("ECHOLIB_EXPORTS", "1")])
+elif os.path.isfile(os.path.join("routio", "routio", "loop.h")):
+    sources = glob.glob("routio/routio/*.cpp")
+    args = dict(sources=sources, include_dirs=[os.path.join(root, "routio"), get_numpy_include(), get_pybind_include()], define_macros=[("ROUTIO_EXPORTS", "1")])
     args["language"] = "c++"
-    varargs["ext_modules"] = [CTypes("echolib.pyecho", **args)]
+    varargs["ext_modules"] = [CTypes("routio.pyroutio", **args)]
     varargs["cmdclass"] = {'build_ext': build_ext_ctypes}
     varargs["setup_requires"] = ["pybind11>=2.5.0", "numpy>=1.16"]
-    varargs["exclude_package_data"] = {'echolib.pyecho': ['*.cpp']}
+    varargs["exclude_package_data"] = {'routio.pyroutio': ['*.cpp']}
 
-varargs["package_data"]['echolib.messages.library'] = ['*.msg']
-varargs["package_data"]['echolib.messages.templates'] = ['*.tpl']
+varargs["package_data"]['routio.messages.library'] = ['*.msg']
+varargs["package_data"]['routio.messages.templates'] = ['*.tpl']
 
 setup(
-    name='echolib',
+    name='routio',
     version=__version__,
     author='Luka Cehovin Zajc',
     author_email='luka.cehovin@gmail.com',
-    url='https://github.com/vicoslab/echolib',
-    description='Python bindings for echolib',
+    url='https://github.com/vicoslab/routio',
+    description='Python bindings for routio',
     long_description='',
     packages=setuptools.find_packages(),
     include_package_data=True,
@@ -123,12 +123,12 @@ setup(
     zip_safe=False,
     entry_points={
         'console_scripts': [
-            'echodaemon = echolib.__main__:main',
-            'echorouter = echolib.__main__:main',
-            'echogenerate = echolib.messages.cli:main',
+            'routio-daemon = routio.__main__:main',
+            'routio-router = routio.__main__:main',
+            'routio-generate = routio.messages.cli:main',
         ],
         'ignition': [
-            'echolib_remap = echolib.ignition:Mapping',
+            'routio_remap = routio.ignition:Mapping',
         ],
     },
     **varargs

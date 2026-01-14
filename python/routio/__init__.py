@@ -12,9 +12,9 @@ from future.utils import bytes_to_native_str
 
 standard_library.install_aliases()
 try:
-    import echolib.pyecho as _echo
+    import routio.pyroutio as _echo
 except ImportError as ie:
-    raise ImportError("Echo binary library not found", ie)
+    raise ImportError("Routio binary library not found", ie)
 
 IOLoop = _echo.IOLoop
 IOBase = _echo.IOBase

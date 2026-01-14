@@ -6,19 +6,19 @@
 #include <iostream>
 #include <fstream>
 
-#include <echolib/client.h>
-#include <echolib/datatypes.h>
+#include <routio/client.h>
+#include <routio/datatypes.h>
 
 using namespace std;
-using namespace echolib;
+using namespace routio;
 
 #define DELIMITER "$ "
 
-namespace echolib {
+namespace routio {
 
 template <> inline string get_type_identifier<string>() { return string("string"); }
 
-template<> inline shared_ptr<Message> echolib::Message::pack<string>(const string &data) {
+template<> inline shared_ptr<Message> routio::Message::pack<string>(const string &data) {
     MessageWriter writer(data.size() + sizeof(int));
 
     writer.write_string(data);
@@ -26,7 +26,7 @@ template<> inline shared_ptr<Message> echolib::Message::pack<string>(const strin
     return make_shared<BufferedMessage>(writer);
 }
 
-template<> inline shared_ptr<string> echolib::Message::unpack<string>(SharedMessage message) {
+template<> inline shared_ptr<string> routio::Message::unpack<string>(SharedMessage message) {
 
     MessageReader reader(message);
 
@@ -48,7 +48,7 @@ int main(int argc, char** argv) {
 
     SharedIOLoop loop = make_shared<IOLoop>();
 
-    SharedClient client = make_shared<echolib::Client>(string(argv[1]));
+    SharedClient client = make_shared<routio::Client>(string(argv[1]));
 
     loop->add_handler(client);
 

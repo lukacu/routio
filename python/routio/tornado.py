@@ -18,7 +18,7 @@ try:
 except ImportError:
     raise ImportError("Tornado not installed")
 
-import echolib.camera as camera
+import routio.camera as camera
 
 _encode_jpeg = None
 
@@ -46,9 +46,9 @@ except ImportError:
     except ImportError:
         pass
 
-import echolib
+import routio
 
-class TornadoClientObserver(echolib.IOBaseObserver):
+class TornadoClientObserver(routio.IOBaseObserver):
 
     def __init__(self, ioloop, client, disconnect_callback):
         super().__init__()

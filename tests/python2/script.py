@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 
 import sys
 
-import echolib
+import routio
 
 from time import time
 
@@ -21,22 +21,22 @@ if __name__ == "__main__":
         global counter
         counter += 1
 
-        print("Msg %d: %s " % (counter, echolib.MessageReader(message).readString()))
+        print("Msg %d: %s " % (counter, routio.MessageReader(message).readString()))
         
 
-    loop   = echolib.IOLoop()
-    client = echolib.Client()
+    loop   = routio.IOLoop()
+    client = routio.Client()
     loop.add_handler(client)
 
 
-    subscriber = echolib.Subscriber(client, channel_in, u"string", __callback)
-    publisher  = echolib.Publisher(client, channel_out, u"string") 
+    subscriber = routio.Subscriber(client, channel_in, u"string", __callback)
+    publisher  = routio.Publisher(client, channel_out, u"string") 
 
     t = time()
 
     while loop.wait(100):
     
-        writer = echolib.MessageWriter()
+        writer = routio.MessageWriter()
         writer.writeString("Hello there")
 
         print("Send")

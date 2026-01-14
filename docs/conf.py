@@ -46,7 +46,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'echo'
+project = u'routio'
 copyright = u'2016, ViCoS Lab'
 author = u'ViCoS Lab'
 
@@ -222,7 +222,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  (master_doc, 'echo.tex', u'EchoLib Documentation',
+  (master_doc, 'echo.tex', u'Routio Documentation',
    u'ViCoS', 'manual'),
 ]
 
@@ -252,7 +252,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'echo', u'EchoLib Documentation',
+    (master_doc, 'echo', u'Routio Documentation',
      [author], 1)
 ]
 
@@ -266,8 +266,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  (master_doc, 'echo', u'EchoLib Documentation',
-   author, 'echo', 'A simple and efficient interprocess communication (IPC) library.',
+  (master_doc, 'echo', u'Routio Documentation',
+   author, 'routio', 'A simple and efficient interprocess communication (IPC) library.',
    'IPC'),
 ]
 

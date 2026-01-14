@@ -9,8 +9,8 @@ from future import standard_library
 standard_library.install_aliases()
 from builtins import object
 import sys
-import echolib
-from echolib.camera import FrameSubscriber
+import routio
+from routio.camera import FrameSubscriber
 
 try:
     import cv2
@@ -37,8 +37,8 @@ def main():
 
     collector = FrameCollector()
 
-    loop = echolib.IOLoop()
-    client = echolib.Client()
+    loop = routio.IOLoop()
+    client = routio.Client()
     loop.add_handler(client)
 
     sub = FrameSubscriber(client, "camera", collector)

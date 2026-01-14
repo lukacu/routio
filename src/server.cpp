@@ -13,14 +13,14 @@
 #include <errno.h>
 
 #include "debug.h"
-#include <echolib/server.h>
+#include <routio/server.h>
 
 #define SOCKET_BUFFER_SIZE 1024 * 1024
 #define MAX_SEND_MESSAGE_QUEUE 10000
 
 using namespace std;
 
-namespace echolib {
+namespace routio {
 
 ClientConnection::ClientConnection(int sfd, SharedServer server): fd(sfd), reader(sfd), writer(sfd, MAX_SEND_MESSAGE_QUEUE), connected(true),  server(server) {
 	struct ucred cr;
@@ -258,8 +258,8 @@ Server::Server(SharedIOLoop loop, const std::string& address) : loop(loop) {
 	std::string taddress = address;
 
 	if (taddress.empty()) {
-		if (getenv("ECHOLIB_SOCKET") != NULL) {
-			taddress = string(getenv("ECHOLIB_SOCKET"));
+		if (getenv("ROUTIO_SOCKET") != NULL) {
+			taddress = string(getenv("ROUTIO_SOCKET"));
 		} else {
 			taddress = "/tmp/echo.sock";
 		}

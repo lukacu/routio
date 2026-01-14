@@ -13,7 +13,7 @@
 #define register      // Deprecated in C++11.
 #endif
 
-namespace echolib {
+namespace routio {
 
 /*
 Copyright (c) 2014, Andrea Sansottera

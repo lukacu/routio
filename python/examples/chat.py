@@ -9,13 +9,13 @@ from future import standard_library
 standard_library.install_aliases()
 import sys
 import time
-import echolib
+import routio
 import threading
 
 def main():
 
     def message(message):
-        reader = echolib.MessageReader(message)
+        reader = routio.MessageReader(message)
         name = reader.readString()
         message = reader.readString()
         print(name + ": " + message)
@@ -24,23 +24,23 @@ def main():
         while client.isConnected():
             try:
                 message = input()
-                writer = echolib.MessageWriter()
+                writer = routio.MessageWriter()
                 writer.writeString(name)
                 writer.writeString(message)
                 pub.send(writer)
             except EOFError:
                 break
 
-    loop = echolib.IOLoop()
+    loop = routio.IOLoop()
 
-    client = echolib.Client()
+    client = routio.Client()
     loop.add_handler(client)
 
     name = input("Please enter your name:")
 
-    sub = echolib.Subscriber(client, "chat", "string pair", message)
+    sub = routio.Subscriber(client, "chat", "string pair", message)
 
-    pub = echolib.Publisher(client, "chat", "string pair")
+    pub = routio.Publisher(client, "chat", "string pair")
 
     thread = threading.Thread(target=write, args=(client,pub,name,))
     thread.start()

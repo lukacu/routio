@@ -8,8 +8,8 @@ from future import standard_library
 standard_library.install_aliases()
 from builtins import object
 import sys
-import echolib
-from echolib.camera import FramePublisher, Frame
+import routio
+from routio.camera import FramePublisher, Frame
 import traceback
 
 try:
@@ -27,12 +27,12 @@ class DummyCamera(object):
 
 def main():
 
-    loop = echolib.IOLoop()
-    client = echolib.Client()
+    loop = routio.IOLoop()
+    client = routio.Client()
     loop.add_handler(client)
 
     output = FramePublisher(client, "camera")
-    #count = echolib.SubscriptionWatcher(client, "camera")
+    #count = routio.SubscriptionWatcher(client, "camera")
 
     camera = cv2.VideoCapture(0)
 

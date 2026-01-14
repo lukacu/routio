@@ -1,0 +1,9 @@
+@PACKAGE_INIT@
+
+set_and_check(routio_INCLUDE_DIRS "@PACKAGE_INCLUDE_INSTALL_DIR@")
+set_and_check(routio_LIBRARY_DIRS "@PACKAGE_LIB_INSTALL_DIR@")
+
+include("${CMAKE_CURRENT_LIST_DIR}/routio-targets.cmake")
+
+set(routio_LIBRARIES routio)
+set(routio_FOUND TRUE)

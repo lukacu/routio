@@ -7,11 +7,11 @@
 #include <sys/un.h>
 
 #include "debug.h"
-#include <echolib/routing.h>
+#include <routio/routing.h>
 
 // https://stackoverflow.com/questions/8104904/identify-program-that-connects-to-a-unix-domain-socket
 #define MAX_RECEIVED_MESSAGES_SIZE 50000000 // 50 MB
-namespace echolib
+namespace routio
 {
 
     inline SharedDictionary generate_error_command(int64_t key, const std::string &message)
@@ -304,7 +304,7 @@ namespace echolib
 
         if (channel == ECHO_CONTROL_CHANNEL)
         {
-            shared_ptr<echolib::Dictionary> command(new echolib::Dictionary);
+            shared_ptr<routio::Dictionary> command(new routio::Dictionary);
             read(reader, *command);
             SharedDictionary response = handle_command(client, command);
             if (response)

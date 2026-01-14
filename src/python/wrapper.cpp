@@ -8,12 +8,12 @@
 #include <pybind11/chrono.h>
 #include <pybind11/numpy.h>
 
-#include <echolib/datatypes.h>
-#include <echolib/client.h>
-#include <echolib/routing.h>
-#include <echolib/array.h>
+#include <routio/datatypes.h>
+#include <routio/client.h>
+#include <routio/routing.h>
+#include <routio/array.h>
 
-using namespace echolib;
+using namespace routio;
 namespace py = pybind11;
 
 typedef function<void(string)> MessageCallback;
@@ -70,7 +70,7 @@ public:
         }
         return py::handle(pydata);
     }
-    PYBIND11_TYPE_CASTER(SharedDictionary, _("echolib::SharedDictionary"));
+    PYBIND11_TYPE_CASTER(SharedDictionary, _("routio::SharedDictionary"));
 };
 
 
@@ -326,10 +326,10 @@ void router(string address, bool verbose = false) {
 }
 
 
-PYBIND11_MODULE(pyecho, m) {
+PYBIND11_MODULE(pyroutio, m) {
 
-    //py::module m("pyecho", "Echo IPC library Python bindings");
-    m.doc() = "Echo IPC library Python bindings";
+    //py::module m("pyroutio", "Routio IPC library Python bindings");
+    m.doc() = "Routio IPC library Python bindings";
 
     py::class_<IOBase, PyIOBase, std::shared_ptr<IOBase> >(m, "IOBase")
     .def(py::init())
