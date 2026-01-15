@@ -5,7 +5,7 @@ import setuptools
 
 from setuptools import setup
 
-__version__ = "0.1.0"
+__version__ = "@PROJECT_VERSION@"
 
 from distutils.core import setup, Extension
 from distutils.command.build_ext import build_ext
@@ -93,17 +93,23 @@ try:
 except ImportError:
     pass
 
+# Detect which command is being run
 if os.path.isfile(os.path.join("routio", "pyroutio" + library_suffix)):
+    # Binary exists - include it for wheel builds, exclude for source distributions
     varargs["package_data"]["routio"] = ["pyroutio" + library_suffix]
 
 elif os.path.isfile(os.path.join("routio", "routio", "loop.h")):
+    # Source files exist - for sdist, compile from source; for wheels, build the extension
     sources = glob.glob("routio/routio/*.cpp")
     args = dict(sources=sources, include_dirs=[os.path.join(root, "routio"), get_numpy_include(), get_pybind_include()], define_macros=[("ROUTIO_EXPORTS", "1")])
     args["language"] = "c++"
     varargs["ext_modules"] = [CTypes("routio.pyroutio", **args)]
     varargs["cmdclass"] = {'build_ext': build_ext_ctypes}
     varargs["setup_requires"] = ["pybind11>=2.5.0", "numpy>=1.16"]
-    varargs["exclude_package_data"] = {'routio.pyroutio': ['*.cpp']}
+    # Include headers for source distributions
+    varargs["package_data"]['routio.routio'] = ['*.h']    
+    # Ignore binary for wheels
+    varargs["exclude_package_data"] = {'routio': ['pyroutio*']}
 
 varargs["package_data"]['routio.messages.library'] = ['*.msg']
 varargs["package_data"]['routio.messages.templates'] = ['*.tpl']
@@ -112,10 +118,10 @@ setup(
     name='routio',
     version=__version__,
     author='Luka Cehovin Zajc',
-    author_email='luka.cehovin@gmail.com',
+    author_email='luka.cehovin@protonmail.com',
     url='https://github.com/vicoslab/routio',
-    description='Python bindings for routio',
-    long_description='',
+    description='Python package for routio IPC library',
+    long_description='A simple and efficient interprocess communication (IPC) library for Linux written in C++11.',
     packages=setuptools.find_packages(),
     include_package_data=True,
     python_requires='>=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*',
