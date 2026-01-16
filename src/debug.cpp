@@ -85,31 +85,28 @@ const char* __short_file_name(const char* filename) {
     return &(filename[position]);
 }
 
-std::string format_string(char const* fmt, ...) {
-
+std::string _format_string(const char* fmt, ...) {
     va_list ap;
     va_start(ap, fmt);
-
-    int length = vsnprintf(0, 0, fmt, ap) + 1;
+    int length = vsnprintf(nullptr, 0, fmt, ap) + 1;
+    va_end(ap);
     
+    char* text = new char[length];
     va_start(ap, fmt);
-    
-    char * text = (char*) malloc(sizeof(char) * length);
-    
     vsnprintf(text, length, fmt, ap);
     va_end(ap);
     
-    auto msg = std::string(text);
-
-    free(text);
-
-    return msg; 
+    std::string result(text);
+    delete[] text;
+    return result;
 }
+
+
 
 void print_buffer(ostream& output, unsigned char* buffer, size_t length) {
 
     for (size_t i = 0; i < length; i++) { 
-        output << format_string(" %04d: (%#04X) %*d %c", (int) (i), buffer[i], 4, buffer[i], (int) buffer[i]) << std::endl; 
+        output << _format_string(" %04zu: (%#04X) %4d %c", i, buffer[i], (int)buffer[i], (int)buffer[i]) << std::endl; 
     }
 
 }

@@ -197,7 +197,7 @@ cv::Mat Tensor::asMat() const {
     for (size_t i = 0; i < dimensions.size(); i++) { size[i] = (int) dimensions[i]; }
 
     if (ndims >= CV_MAX_DIM) {
-        throw runtime_error(format_string("Dimensionality (%d) is not supported by OpenCV", ndims));
+        throw runtime_error(_format_string("Dimensionality (%d) is not supported by OpenCV", ndims));
     } 
 
     if( ndims == 3 && size[2] <= CV_CN_MAX) {

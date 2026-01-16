@@ -154,7 +154,7 @@ namespace routio
 
         for (size_t i = 0; i < length; i++)
         {
-            std::cout << format_string(" %04d: (%#04X) %*d %c", (int)(i + position), temp[i], 4, temp[i], (int)temp[i]) << std::endl;
+            std::cout << _format_string(" %04zu: (%#04X) %4d %c", i + position, temp[i], (int)temp[i], (int)temp[i]) << std::endl;
         }
 
         delete[] temp;
