@@ -15,7 +15,7 @@ First, create a new directory and download the project from Github::
     
     mkdir project_directory_path
     cd project_directory_path
-    git clone https://github.com/vicoslab/routio
+    git clone https://github.com/lukacu/routio
 
 Then, use CMake to build the project::
     

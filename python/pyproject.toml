@@ -37,10 +37,10 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/vicoslab/routio"
-Documentation = "https://github.com/vicoslab/routio"
-"Source Code" = "https://github.com/vicoslab/routio"
-"Bug Tracker" = "https://github.com/vicoslab/routio/issues"
+Homepage = "https://github.com/lukacu/routio"
+Documentation = "https://github.com/lukacu/routio"
+"Source Code" = "https://github.com/lukacu/routio"
+"Bug Tracker" = "https://github.com/lukacu/routio/issues"
 
 [project.scripts]
 routio-daemon = "routio.__main__:main"
