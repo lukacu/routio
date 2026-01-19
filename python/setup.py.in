@@ -29,6 +29,10 @@ class get_numpy_include(object):
 root = os.path.abspath(os.path.dirname(__file__))
 platform = os.getenv("ROUTIO_PYTHON_PLATFORM", sys.platform)
 
+# Read long description from README
+with open(os.path.join(root, "README.md"), encoding="utf-8") as f:
+    long_description = f.read()
+
 if platform.startswith('linux'):
     library_suffix = '.so'
 elif platform in ['darwin']:
@@ -146,8 +150,8 @@ setup(
         'Bug Tracker': 'https://github.com/lukacu/routio/issues',
     },
     description='Python package for routio IPC library',
-    long_description='A simple and efficient interprocess communication (IPC) library for Linux written in C++11.',
-    long_description_content_type='text/plain',
+    long_description=long_description,
+    long_description_content_type='text/markdown',
     keywords=['ipc', 'interprocess', 'communication', 'messaging', 'rpc'],
     classifiers=[
         'Development Status :: 4 - Beta',

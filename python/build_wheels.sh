@@ -54,6 +54,8 @@ export CIBW_BUILD="cp310-* cp311-* cp312-* cp313-*"
 
 ROOT=$(dirname $(dirname $(realpath $0)))
 
+mkdir -p $ROOT/build
+
 pushd $ROOT/build
 cmake .. && make -j4
 popd

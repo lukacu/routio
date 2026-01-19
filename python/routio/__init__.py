@@ -31,7 +31,8 @@ long = type(bytes_to_native_str(b'long'), (), {})
 
 _type_registry = {}
 
-def router(address="/tmp/routio.sock", verbose=False):
+def router(address=None, verbose=False):
+    address = "" if address is None else address
     _wrapper.router(address, verbose)
 
 def registerType(cls, read, write, convert=None):
