@@ -114,6 +114,13 @@ if(BUILD_APPS)
     target_link_libraries(routio_router routio)
     install(TARGETS routio_router DESTINATION ${CMAKE_INSTALL_BINDIR})
 
+    add_executable(routio_generate 
+        src/generator/parser.cpp 
+        src/generator/generator.cpp
+        src/generator/templates.cpp)
+
+    install(TARGETS routio_generate DESTINATION ${CMAKE_INSTALL_BINDIR})
+
     if (BUILD_OPENCV)
         ADD_EXECUTABLE(routio_camera src/apps/cameraserver.cpp)
         TARGET_LINK_LIBRARIES(routio_camera routio ${OpenCV_LIBS})
