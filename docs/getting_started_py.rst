@@ -10,7 +10,7 @@ Basic concepts
 * Handling of received messages is done through callback functions. When a process subscribes to a channel, it also provides a callback function that will be 
   called on the received messages.
 * Routio uses a central process (also called a dameon) to manage it's communication. This the deamon needs to run in the background if you want to use the library.
-  To start the daemon, navigate to the build directory of the project and run ./echodaemon socket_path, where socket path is the path to a socket through which the processes
+  To start the daemon, navigate to the build directory of the project and run ./routio-router socket_path, where socket path is the path to a socket through which the processes
   will communicate. The programs you are writing will use this socket path to connect with the daemon.
 * All Routio methods are thread safe. 
 
@@ -61,7 +61,7 @@ Let's examine the included chat example to get an idea of how to write programs 
     if __name__ == '__main__':
         main() 
 
-All of Echo's functions are defined in the routio library, so we first need to include it::
+All of Routio's functions are defined in the routio library, so we first need to include it::
    
     import routio
 

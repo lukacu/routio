@@ -17,7 +17,7 @@ namespace routio
     inline SharedDictionary generate_error_command(int64_t key, const std::string &message)
     {
 
-        SharedDictionary command = generate_command(ECHO_COMMAND_ERROR);
+        SharedDictionary command = generate_command(ROUTIO_COMMAND_ERROR);
         command->set<string>("error", message);
         command->set<int>("key", key);
 
@@ -27,7 +27,7 @@ namespace routio
     inline SharedDictionary generate_confirm_command(int64_t key)
     {
 
-        SharedDictionary command = generate_command(ECHO_COMMAND_OK);
+        SharedDictionary command = generate_command(ROUTIO_COMMAND_OK);
         command->set<int>("key", key);
 
         return command;
@@ -36,7 +36,7 @@ namespace routio
     inline SharedDictionary generate_event_command(int channel)
     {
 
-        SharedDictionary command = generate_command(ECHO_COMMAND_EVENT);
+        SharedDictionary command = generate_command(ROUTIO_COMMAND_EVENT);
         command->set<int>("channel", channel);
         return command;
     }
@@ -115,7 +115,7 @@ namespace routio
             SharedMessage message = Message::pack<Dictionary>(*status);
             for (std::set<SharedClientConnection>::iterator it = watchers.begin(); it != watchers.end(); ++it)
             {
-                send((*it), ECHO_CONTROL_CHANNEL, message);
+                send((*it), ROUTIO_CONTROL_CHANNEL, message);
             }
 
             return true;
@@ -140,7 +140,7 @@ namespace routio
             SharedMessage message = Message::pack<Dictionary>(*status);
             for (std::set<SharedClientConnection>::iterator it = watchers.begin(); it != watchers.end(); ++it)
             {
-                send((*it), ECHO_CONTROL_CHANNEL, message);
+                send((*it), ROUTIO_CONTROL_CHANNEL, message);
             }
 
             return true;
@@ -161,7 +161,7 @@ namespace routio
             status->set<int>("subscribers", subscribers.size());
             status->set<string>("type", "summary");
             SharedMessage message = Message::pack<Dictionary>(*status);
-            send(client, ECHO_CONTROL_CHANNEL, message);
+            send(client, ROUTIO_CONTROL_CHANNEL, message);
 
             return true;
         }
@@ -302,7 +302,7 @@ namespace routio
         MessageReader reader(message);
         int channel = reader.read_integer();
 
-        if (channel == ECHO_CONTROL_CHANNEL)
+        if (channel == ROUTIO_CONTROL_CHANNEL)
         {
             shared_ptr<routio::Dictionary> command(new routio::Dictionary);
             read(reader, *command);
@@ -310,7 +310,7 @@ namespace routio
             if (response)
             {
                 SharedMessage message = Message::pack<Dictionary>(*response);
-                send(client, ECHO_CONTROL_CHANNEL, message);
+                send(client, ROUTIO_CONTROL_CHANNEL, message);
             }
             return;
         }
@@ -373,7 +373,7 @@ namespace routio
         int key = command->get<int>("key", -1);
         switch (command->get<int>("code", -1))
         {
-        case ECHO_COMMAND_LOOKUP:
+        case ROUTIO_COMMAND_LOOKUP:
         {
             string channel_alias = command->get<string>("alias", "");
             string channel_type = command->get<string>("type", "");
@@ -401,7 +401,7 @@ namespace routio
             if (channel_type.empty() || channels[id]->get_type().empty() || channels[id]->get_type() == channel_type)
             {
                 channels[id]->set_type(channel_type);
-                SharedDictionary command = generate_command(ECHO_COMMAND_RESULT);
+                SharedDictionary command = generate_command(ROUTIO_COMMAND_RESULT);
                 command->set<string>("alias", channel_alias);
                 command->set<string>("type", channels[id]->get_type());
                 command->set<int>("channel", id);
@@ -414,9 +414,9 @@ namespace routio
                 return generate_error_command(key, "Channel type does not match");
             }
         }
-        case ECHO_COMMAND_SUBSCRIBE:
+        case ROUTIO_COMMAND_SUBSCRIBE:
         {
-            int channel_id = command->get<int>("channel", ECHO_COMMAND_UNKNOWN);
+            int channel_id = command->get<int>("channel", ROUTIO_COMMAND_UNKNOWN);
 
             if (channels.find(channel_id) == channels.end())
             {
@@ -432,7 +432,7 @@ namespace routio
 
             return generate_confirm_command(key);
         }
-        case ECHO_COMMAND_SUBSCRIBE_ALIAS:
+        case ROUTIO_COMMAND_SUBSCRIBE_ALIAS:
         {
             string channel_alias = command->get<string>("channel", "");
             auto channel_id = aliases[channel_alias];
@@ -452,14 +452,14 @@ namespace routio
             ret->set<int>("channel_id", channel_id);
             return ret;
         }
-        case ECHO_COMMAND_CREATE_CHANNEL_WITH_ALIAS:
+        case ROUTIO_COMMAND_CREATE_CHANNEL_WITH_ALIAS:
         {
             string channel_alias = command->get<string>("channel", "");
             string channel_type = command->get<string>("type", "");
             create_channel(channel_alias, client, channel_type);
             return generate_confirm_command(key);
         }
-        case ECHO_COMMAND_UNSUBSCRIBE:
+        case ROUTIO_COMMAND_UNSUBSCRIBE:
         {
 
             int channel_id = command->get<int>("channel", 0);
@@ -478,7 +478,7 @@ namespace routio
 
             return generate_confirm_command(key);
         }
-        case ECHO_COMMAND_WATCH:
+        case ROUTIO_COMMAND_WATCH:
         {
 
             int channel_id = command->get<int>("channel", 0);
@@ -497,7 +497,7 @@ namespace routio
 
             return generate_confirm_command(key);
         }
-        case ECHO_COMMAND_UNWATCH:
+        case ROUTIO_COMMAND_UNWATCH:
         {
 
             int channel_id = command->get<int>("channel", 0);
@@ -516,7 +516,7 @@ namespace routio
 
             return generate_confirm_command(key);
         }
-        case ECHO_COMMAND_SET_NAME:
+        case ROUTIO_COMMAND_SET_NAME:
         {
 
             string name = command->get<string>("name", "");
@@ -525,7 +525,7 @@ namespace routio
 
             return generate_confirm_command(key);
         }
-        case ECHO_COMMAND_GET_NAME:
+        case ROUTIO_COMMAND_GET_NAME:
         {
 
             int fid = command->get<int>("fid", -1);
@@ -535,7 +535,7 @@ namespace routio
             if (!r)
                 return generate_error_command(key, "Not found");
 
-            SharedDictionary command = generate_command(ECHO_COMMAND_RESULT);
+            SharedDictionary command = generate_command(ROUTIO_COMMAND_RESULT);
             command->set<int>("fid", fid);
             command->set<string>("name", r->get_name());
             return command;

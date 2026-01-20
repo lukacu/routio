@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: nil; c-basic-offset: 4; tab-width: 4 -*- */
 
-#ifndef ECHO_HELPERS_HPP_
-#define ECHO_HELPERS_HPP_
+#ifndef ROUTIO_HELPERS_HPP_
+#define ROUTIO_HELPERS_HPP_
 
 #include <routio/client.h>
 #include <routio/datatypes.h>
@@ -97,7 +97,7 @@ namespace routio {
 
 template<class T> shared_ptr<T> Message::unpack(SharedMessage message) {
 
-    static_assert(std::is_base_of<MessageLite, T>::value, "T must inherit from echo::protobuf::MessageLite");
+    static_assert(std::is_base_of<MessageLite, T>::value, "T must inherit from routio::protobuf::MessageLite");
 
     ArrayInputStream stream(data, data_length);
 
@@ -113,7 +113,7 @@ template<class T> shared_ptr<T> Message::unpack(SharedMessage message) {
 template<class T>
 inline shared_ptr<Message> Message::pack(int channel, const T &data) {
 
-    static_assert(std::is_base_of<MessageLite, T>::value, "T must inherit from echo::protobuf::MessageLite");
+    static_assert(std::is_base_of<MessageLite, T>::value, "T must inherit from routio::protobuf::MessageLite");
 
     shared_ptr<BufferedMessage> message = make_shared<BufferedMessage>(channel, data.ByteSize());
 
@@ -192,7 +192,7 @@ class TypedPublisher : public std::conditional<Chunked,ChunkedPublisher,Publishe
 
 template<class T> shared_ptr<T> Message::unpack(SharedMessage message) {
 
-    static_assert(std::is_base_of<MessageLite, T>::value, "T must inherit from echo::protobuf::MessageLite");
+    static_assert(std::is_base_of<MessageLite, T>::value, "T must inherit from routio::protobuf::MessageLite");
 
     ArrayInputStream stream(data, data_length);
 
@@ -208,7 +208,7 @@ template<class T> shared_ptr<T> Message::unpack(SharedMessage message) {
 template<class T>
 inline shared_ptr<Message> Message::pack(int channel, const T &data) {
 
-    static_assert(std::is_base_of<MessageLite, T>::value, "T must inherit from echo::protobuf::MessageLite");
+    static_assert(std::is_base_of<MessageLite, T>::value, "T must inherit from routio::protobuf::MessageLite");
 
     shared_ptr<BufferedMessage> message = make_shared<BufferedMessage>(channel, data.ByteSize());
 

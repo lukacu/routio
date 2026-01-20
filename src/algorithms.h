@@ -1,8 +1,8 @@
 
 /* -*- Mode: C++; indent-tabs-mode: nil; c-basic-offset: 4; tab-width: 4 -*- */
 
-#ifndef ECHO_ALGORITHMS_HPP_
-#define ECHO_ALGORITHMS_HPP_
+#ifndef ROUTIO_ALGORITHMS_HPP_
+#define ROUTIO_ALGORITHMS_HPP_
 
 #include <algorithm>
 #include <iterator>

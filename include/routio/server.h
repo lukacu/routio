@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: nil; c-basic-offset: 4; tab-width: 4 -*- */
 
-#ifndef ECHO_SERVER_HPP_
-#define ECHO_SERVER_HPP_
+#ifndef ROUTIO_SERVER_HPP_
+#define ROUTIO_SERVER_HPP_
 
 #include <string>
 #include <map>

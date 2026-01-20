@@ -142,7 +142,7 @@ namespace routio
         if (!name.empty())
         {
 
-            SharedDictionary command = generate_command(ECHO_COMMAND_SET_NAME);
+            SharedDictionary command = generate_command(ROUTIO_COMMAND_SET_NAME);
             command->set<string>("name", name);
 
             send_command(command);
@@ -268,12 +268,12 @@ namespace routio
     void Client::handle_message(int channel, SharedMessage &message)
     {
 
-        if (channel == ECHO_CONTROL_CHANNEL)
+        if (channel == ROUTIO_CONTROL_CHANNEL)
         {
             SharedDictionary response = Message::unpack<Dictionary>(message);
             if (!response->contains("key"))
             {
-                if (response->get<int>("code", ECHO_COMMAND_UNKNOWN) == ECHO_COMMAND_EVENT)
+                if (response->get<int>("code", ROUTIO_COMMAND_UNKNOWN) == ROUTIO_COMMAND_EVENT)
                 {
                     int channel = response->get<int>("channel", 0);
                     if (watches.find(channel) == watches.end())
@@ -313,7 +313,7 @@ namespace routio
         {
             DEBUGMSG("Subscribing to channel %d\n", channel);
             // Generate a subscription command message
-            SharedDictionary command = generate_command(ECHO_COMMAND_SUBSCRIBE);
+            SharedDictionary command = generate_command(ROUTIO_COMMAND_SUBSCRIBE);
             command->set<int>("channel", channel);
             std::function<bool(SharedDictionary, SharedDictionary)> comm_callback = [](SharedDictionary x, SharedDictionary y)
             {
@@ -349,7 +349,7 @@ namespace routio
         {
             DEBUGMSG("No more subscribers for %d\n", channel);
             // no more callbacks, we can unsubscribe
-            SharedDictionary command = generate_command(ECHO_COMMAND_UNSUBSCRIBE);
+            SharedDictionary command = generate_command(ROUTIO_COMMAND_UNSUBSCRIBE);
             command->set<int>("channel", channel);
             std::function<bool(SharedDictionary, SharedDictionary)> callback = [](SharedDictionary x, SharedDictionary y)
             {
@@ -370,7 +370,7 @@ namespace routio
         if (watches.find(channel) == watches.end())
         {
             // Generate a subscription command message
-            SharedDictionary command = generate_command(ECHO_COMMAND_WATCH);
+            SharedDictionary command = generate_command(ROUTIO_COMMAND_WATCH);
             command->set<int>("channel", channel);
             std::function<bool(SharedDictionary, SharedDictionary)> callback = [](SharedDictionary x, SharedDictionary y)
             {
@@ -406,7 +406,7 @@ namespace routio
         {
             DEBUGMSG("No more watchers for %d\n", channel);
             // No more callbacks, we can unwatch
-            SharedDictionary command = generate_command(ECHO_COMMAND_UNWATCH);
+            SharedDictionary command = generate_command(ROUTIO_COMMAND_UNWATCH);
             command->set<int>("channel", channel);
             std::function<bool(SharedDictionary, SharedDictionary)> callback = [](SharedDictionary x, SharedDictionary y)
             {
@@ -446,7 +446,7 @@ namespace routio
 
         pair<SharedDictionary, function<bool(SharedDictionary, SharedDictionary)>> pending(command, callback);
         requests[key] = pending;
-        send(ECHO_CONTROL_CHANNEL, Message::pack<Dictionary>(*command));
+        send(ROUTIO_CONTROL_CHANNEL, Message::pack<Dictionary>(*command));
     }
 
     static bool internal_lookup_callback(SharedDictionary in, SharedDictionary out, function<void(SharedDictionary)> callback)
@@ -470,7 +470,7 @@ namespace routio
         SYNCHRONIZED(mutex);
 
         // Create appropriate command
-        SharedDictionary command = generate_command(ECHO_COMMAND_LOOKUP);
+        SharedDictionary command = generate_command(ROUTIO_COMMAND_LOOKUP);
         command->set<string>("alias", real_alias);
         command->set<string>("type", type);
         command->set<bool>("create", create);

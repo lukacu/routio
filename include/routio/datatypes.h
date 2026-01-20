@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: nil; c-basic-offset: 4; tab-width: 4 -*- */
 
-#ifndef ECHO_DATATYPES_HPP_
-#define ECHO_DATATYPES_HPP_
+#ifndef ROUTIO_DATATYPES_HPP_
+#define ROUTIO_DATATYPES_HPP_
 
 #include <chrono>
 

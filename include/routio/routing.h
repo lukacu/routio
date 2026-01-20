@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: nil; c-basic-offset: 4; tab-width: 4 -*- */
 
-#ifndef ECHO_ROUTING_HPP_
-#define ECHO_ROUTING_HPP_
+#ifndef ROUTIO_ROUTING_HPP_
+#define ROUTIO_ROUTING_HPP_
 
 #include <routio/message.h>
 #include <routio/server.h>

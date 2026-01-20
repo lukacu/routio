@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: nil; c-basic-offset: 4; tab-width: 4 -*- */
 
-#ifndef ECHO_LOOP_HPP_
-#define ECHO_LOOP_HPP_
+#ifndef ROUTIO_LOOP_HPP_
+#define ROUTIO_LOOP_HPP_
 
 #include <string>
 #include <map>

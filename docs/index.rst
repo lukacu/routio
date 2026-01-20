@@ -6,6 +6,8 @@
 Welcome to Routio's documentation!
 ================================
 
+Routio is a IPC library for embedded computer vision and robotics applications, designed for high performance and low latency communication between processes written in C++ and Python.
+
 Contents:
 
 .. toctree::
@@ -16,6 +18,7 @@ Contents:
    getting_started_py
    getting_started_cpp
    advanced_concepts
+   syntax
    for_developers
 
 

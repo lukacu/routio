@@ -90,7 +90,7 @@ Let's examine the included chat example to get an idea of how to write programs 
         exit(0);
     }
 
-Echo's functionallity is defined in several header files, so we need to include them first::
+Routio's functionallity is defined in several header files, so we need to include them first::
 
     #include "client.h"
     #include "datatypes.h"

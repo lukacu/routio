@@ -1,7 +1,7 @@
 /* -*- Mode: C++; indent-tabs-mode: nil; c-basic-offset: 4; tab-width: 4 -*- */
 
-#ifndef ECHO_MESSAGE_HPP_
-#define ECHO_MESSAGE_HPP_
+#ifndef ROUTIO_MESSAGE_HPP_
+#define ROUTIO_MESSAGE_HPP_
 
 #include <cstdio>
 #include <string>
@@ -18,25 +18,25 @@
 
 using namespace std;
 
-#define ECHO_CONTROL_CHANNEL 0
+#define ROUTIO_CONTROL_CHANNEL 0
 
 // TODO: change this to strings
-#define ECHO_COMMAND_UNKNOWN -4
-#define ECHO_COMMAND_EVENT -3
-#define ECHO_COMMAND_RESULT -2
-#define ECHO_COMMAND_ERROR -1
-#define ECHO_COMMAND_OK 0
-#define ECHO_COMMAND_SUBSCRIBE 1
-#define ECHO_COMMAND_UNSUBSCRIBE 2
-#define ECHO_COMMAND_WATCH 3
-#define ECHO_COMMAND_UNWATCH 4
-#define ECHO_COMMAND_LOOKUP 5
-#define ECHO_COMMAND_SUBSCRIBE_ALIAS 6
-#define ECHO_COMMAND_CREATE_CHANNEL_WITH_ALIAS 7
-#define ECHO_COMMAND_CREATE_CHANNEL 8
-#define ECHO_COMMAND_SET_NAME 9
-#define ECHO_COMMAND_GET_NAME 10
-#define ECHO_COMMAND_CREATE_SERVICE 11
+#define ROUTIO_COMMAND_UNKNOWN -4
+#define ROUTIO_COMMAND_EVENT -3
+#define ROUTIO_COMMAND_RESULT -2
+#define ROUTIO_COMMAND_ERROR -1
+#define ROUTIO_COMMAND_OK 0
+#define ROUTIO_COMMAND_SUBSCRIBE 1
+#define ROUTIO_COMMAND_UNSUBSCRIBE 2
+#define ROUTIO_COMMAND_WATCH 3
+#define ROUTIO_COMMAND_UNWATCH 4
+#define ROUTIO_COMMAND_LOOKUP 5
+#define ROUTIO_COMMAND_SUBSCRIBE_ALIAS 6
+#define ROUTIO_COMMAND_CREATE_CHANNEL_WITH_ALIAS 7
+#define ROUTIO_COMMAND_CREATE_CHANNEL 8
+#define ROUTIO_COMMAND_SET_NAME 9
+#define ROUTIO_COMMAND_GET_NAME 10
+#define ROUTIO_COMMAND_CREATE_SERVICE 11
 
 // TODO: move buffer size from a define to a variable that the user can change, since it has an effect on performance
 #define BUFFER_SIZE 1024 * 1024 * 2
